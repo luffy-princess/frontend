@@ -1,28 +1,73 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "피시미",
+    "slug": "phishme-frontend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesAppleSignIn": true,
+      "bundleIdentifier": "com.phishme.app",
+      "backgroundColor": "#fff",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#ffffff",
+        "enableProguardInReleaseBuilds ": true,
+        "package": "com.phishme.app"
+      },
+      "package": "com.phishme.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font",
+      "expo-localization",
+      "expo-build-properties",
+      "expo-apple-authentication",
+      [
+        "@react-native-seoul/kakao-login",
+        {
+          "kakaoAppKey": "",
+          "kotlinVersion": "1.9.0"
+        }
+      ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": ""
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraMavenRepos": [
+              "https://devrepo.kakao.com/nexus/content/groups/public/"
+            ]
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "43bc9d91-05e3-42f2-8169-3e316143dece"
+      }
     }
   }
 }
