@@ -53,10 +53,10 @@ function TermCheck({ terms, termAgreement, setTermAgreement, navigation, error, 
                 style={styles.checkbox}
                 fillColor="#1A9AF5"
                 innerIconStyle={{
-                    borderRadius: 7
+                    borderRadius: responsive(7)
                 }}
                 iconStyle={{
-                    borderRadius: 7
+                    borderRadius: responsive(7)
                 }}
                 isChecked={termAgreement.some((a) => a.termId === term.id && a.isChecked)}
                 onPress={(isChecked) => handleChecked(term.id, term.version, isChecked)}
@@ -77,10 +77,10 @@ function TermCheck({ terms, termAgreement, setTermAgreement, navigation, error, 
                     style={styles.checkbox}
                     fillColor="#1A9AF5"
                     innerIconStyle={{
-                        borderRadius: 7
+                        borderRadius: responsive(7)
                     }}
                     iconStyle={{
-                        borderRadius: 7
+                        borderRadius: responsive(7)
                     }}
                     isChecked={checkAll}
                     onPress={handleCheckAll}

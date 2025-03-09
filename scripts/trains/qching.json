@@ -1,0 +1,490 @@
+{
+    "trainName": "큐싱",
+    "trainIcon": "qr-code",
+    "trainDescription": "가짜 QR 코드 큐싱을 식별하고 안전한 대처법을 배우는 훈련입니다.",
+    "difficulty": "초급",
+    "scenarios": [
+        {
+            "scenarioId": "Qshing_01",
+            "name": "전동킥보드 QR 코드 큐싱",
+            "descriptionLong": "전동킥보드의 가짜 QR 코드를 식별하는 방법과 적절한 대처법을 익힙니다.",
+            "descriptionShort": "전동킥보드 큐싱 대응 훈련",
+            "screens": [
+                {
+                    "screenId": "start",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "이 훈련에서 가짜 QR 코드를 식별하고 안전한 대처법을 배웁니다. 아래 버튼을 눌러 시작하세요."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "훈련 시작하기",
+                            "action": "navigate",
+                            "target": "select_scooter"
+                        },
+                        {
+                            "text": "뒤로가기",
+                            "action": "navigate",
+                            "target": "scenario_selection"
+                        }
+                    ]
+                },
+                {
+                    "screenId": "select_scooter",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "전동킥보드를 선택하세요."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "scooter_selection.png"
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "선택 완료",
+                            "action": "navigate",
+                            "target": "qr_scan"
+                        }
+                    ]
+                },
+                {
+                    "screenId": "qr_scan",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "QR 코드를 스캔하여 결과를 확인하세요."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "qr_code_display.png"
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "잠시 후, QR 코드에 미묘한 변화가 감지되었습니다. 주의 깊게 살펴보세요."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "QR 코드를 바로 스캔한다",
+                            "action": "navigate",
+                            "target": "malicious_site",
+                            "score_change": -10
+                        },
+                        {
+                            "text": "QR 코드 상태를 먼저 살펴본다",
+                            "action": "navigate",
+                            "target": "inspect_qr",
+                            "score_change": 0
+                        }
+                    ]
+                },
+                {
+                    "screenId": "inspect_qr",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "QR 코드에서 위조 징후를 발견했습니다."
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "자세히 들여다보니, 코드의 디자인에 미세한 차이가 있으며 주변 색상도 평소와 다릅니다. 이러한 점들은 위조의 단서가 됩니다."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "qr_code_display.png"
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "공식 앱으로 QR 코드를 다시 스캔한다",
+                            "action": "training_end",
+                            "target": "training_success",
+                            "score_change": 0
+                        },
+                        {
+                            "text": "무시하고 링크를 클릭한다",
+                            "action": "training_end",
+                            "target": "training_failed",
+                            "score_change": -15
+                        }
+                    ]
+                },
+                {
+                    "screenId": "malicious_site",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "악성 사이트에 접속했습니다. 개인정보가 유출될 수 있습니다."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "danger_site_warning.png"
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "즉각적인 조치가 필요합니다."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "즉시 사이트 나가기",
+                            "action": "training_end",
+                            "target": "training_failed",
+                            "score_change": -10
+                        }
+                    ]
+                }
+            ],
+            "training_success": {
+                "title": "훈련 성공!",
+                "description": "악성 QR 코드를 성공적으로 식별하고 피해를 예방했습니다."
+            },
+            "training_failed": {
+                "title": "훈련 실패",
+                "description": "개인정보가 악성 사이트로 전송되었습니다."
+            },
+            "success_tips": [
+                "덧붙여진 QR 코드는 스캔하지 않기",
+                "공식 앱이나 공식 사이트만 이용하기",
+                "URL 주소 확인하기"
+            ]
+        },
+        {
+            "scenarioId": "Qshing_02",
+            "name": "가짜 주차 위반 딱지 큐싱 대응",
+            "descriptionLong": "주차된 차량에 부착된 위조된 주차 딱지를 식별하고 올바르게 대처하는 방법을 익힙니다.",
+            "descriptionShort": "주차 위반 딱지 큐싱 대응 훈련",
+            "screens": [
+                {
+                    "screenId": "start",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "이 훈련에서는 주차된 차량에 부착된 가짜 위반 딱지를 식별하고 올바른 대응을 학습합니다."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "훈련 시작하기",
+                            "action": "navigate",
+                            "target": "view_ticket"
+                        },
+                        {
+                            "text": "뒤로가기",
+                            "action": "navigate",
+                            "target": "scenario_selection"
+                        }
+                    ]
+                },
+                {
+                    "screenId": "view_ticket",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "주차된 차량에 부착된 주차 위반 딱지를 확인하고 QR 코드를 스캔하세요."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "fake_parking_ticket.png"
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "티켓의 인쇄 품질과 색상이 평소와 다름을 확인하세요. 미세한 차이가 위조의 단서가 될 수 있습니다."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "QR 코드 스캔하기",
+                            "action": "navigate",
+                            "target": "qr_scan"
+                        },
+                        {
+                            "text": "부착된 기관에 문의하기",
+                            "action": "navigate",
+                            "target": "contact_official"
+                        }
+                    ]
+                },
+                {
+                    "screenId": "contact_official",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "부착된 관리사무소나 경찰에 문의하여 딱지의 진위를 확인했습니다."
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "문의 결과, 이 딱지는 위조된 것으로 확인되었으며 추가 조치 없이 안전하게 처리할 수 있음을 확인했습니다."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "QR 코드를 스캔하지 않고 딱지 제거하기",
+                            "action": "training_end",
+                            "target": "training_success",
+                            "score_change": 0
+                        }
+                    ]
+                },
+                {
+                    "screenId": "qr_scan",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "QR 코드를 스캔하여 벌금 납부 사이트로 이동 중입니다."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "fake_payment_site.png"
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "화면에 표시되는 URL이 평소와 다르며, 의심스러운 기운이 감돌고 있습니다. 잠시 멈추어 다시 판단해보세요."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "웹사이트에 정보 입력하기",
+                            "action": "navigate",
+                            "target": "malicious_site",
+                            "score_change": -20
+                        },
+                        {
+                            "text": "사이트가 의심스럽다고 판단하고 나가기",
+                            "action": "training_end",
+                            "target": "training_failed",
+                            "score_change": 0
+                        }
+                    ]
+                },
+                {
+                    "screenId": "malicious_site",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "입력된 금융 정보가 악성 사이트로 전송될 위험이 있습니다."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "danger_site_warning.png"
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "경고 메시지가 나타났습니다. 즉각적인 조치가 필요합니다."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "즉시 사이트 나가기",
+                            "action": "training_end",
+                            "target": "training_failed",
+                            "score_change": -10
+                        }
+                    ]
+                }
+            ],
+            "training_success": {
+                "title": "훈련 성공!",
+                "description": "가짜 주차 위반 딱지를 성공적으로 식별하고 피해를 예방했습니다."
+            },
+            "training_failed": {
+                "title": "훈련 실패",
+                "description": "개인정보가 악성 사이트로 전송되었습니다."
+            },
+            "success_tips": [
+                "QR 코드는 항상 출처를 확인하세요.",
+                "공식 기관의 웹사이트나 고객센터를 통해 확인하세요.",
+                "개인 정보나 금융 정보를 입력하기 전에 항상 URL을 검토하세요."
+            ]
+        },
+        {
+            "scenarioId": "promotion_qshing",
+            "name": "무료 경품/쿠폰 큐싱 대응",
+            "descriptionLong": "SNS에서 무료 경품이나 쿠폰 QR 코드 이벤트를 악용한 큐싱 사기를 식별하고 대처하는 방법을 익힙니다.",
+            "descriptionShort": "경품 큐싱 대응 훈련",
+            "screens": [
+                {
+                    "screenId": "start",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "이 훈련에서는 경품이나 할인 쿠폰을 미끼로 한 QR 코드 사기를 식별하고 올바르게 대응하는 방법을 학습합니다."
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "이벤트의 혜택이 너무 좋아 보여, QR 코드를 통해 상세 정보를 확인해보고자 합니다."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "훈련 시작하기",
+                            "action": "navigate",
+                            "target": "view_promotion"
+                        },
+                        {
+                            "text": "뒤로가기",
+                            "action": "navigate",
+                            "target": "scenario_selection"
+                        }
+                    ]
+                },
+                {
+                    "screenId": "view_promotion",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "SNS 게시물에서 무료 경품 및 할인 쿠폰 이벤트가 게시되어 있습니다. 혜택이 워낙 좋아 보여 QR 코드를 통해 이벤트에 참여할까 고민하게 됩니다."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "fake_promotion_post.png"
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "QR 코드를 스캔하기",
+                            "action": "navigate",
+                            "target": "qr_scan"
+                        },
+                        {
+                            "text": "이벤트 출처 확인하기",
+                            "action": "navigate",
+                            "target": "check_source"
+                        }
+                    ]
+                },
+                {
+                    "screenId": "check_source",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "SNS 댓글과 인터넷 검색을 통해 이벤트의 출처와 업체 신뢰도를 확인했습니다. 어색한 외국인의 한국어 후기와 부정적인 평가들이 눈에 띕니다."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "comments_search_result.png"
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "QR 코드를 스캔하지 않고 이벤트 무시하기",
+                            "action": "training_end",
+                            "target": "training_success",
+                            "score_change": 0
+                        }
+                    ]
+                },
+                {
+                    "screenId": "qr_scan",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "QR 코드를 스캔하여 무료 쿠폰 등록 페이지로 이동 중입니다."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "fake_coupon_site.png"
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "해당 페이지는 개인정보 입력을 요구하고 있습니다."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "웹사이트에 개인정보 입력하기",
+                            "action": "training_end",
+                            "target": "training_failed",
+                            "score_change": -20
+                        },
+                        {
+                            "text": "사이트가 의심스럽다고 판단하고 나가기",
+                            "action": "training_end",
+                            "target": "training_success",
+                            "score_change": -10
+                        }
+                    ]
+                },
+                {
+                    "screenId": "malicious_site",
+                    "chatMessges": [
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "입력한 개인정보가 악성 사이트로 전송될 위험이 있습니다."
+                        },
+                        {
+                            "type": "img",
+                            "narration": false,
+                            "content": "danger_site_warning.png"
+                        },
+                        {
+                            "type": "text",
+                            "narration": true,
+                            "content": "경고 메시지와 함께 사이트의 레이아웃이 비정상적으로 변동되고 있습니다."
+                        }
+                    ],
+                    "selections": [
+                        {
+                            "text": "즉시 사이트 나가기",
+                            "action": "training_end",
+                            "target": "training_failed",
+                            "score_change": -10
+                        }
+                    ]
+                }
+            ],
+            "training_success": {
+                "title": "훈련 성공!",
+                "description": "잘하셨습니다! 과도한 혜택에 속아 넘어갈 뻔했지만, 신중하게 확인하여 피해를 예방하셨습니다."
+            },
+            "training_failed": {
+                "title": "훈련 실패",
+                "description": "개인정보가 유출되었습니다! 무료 경품/쿠폰 이벤트에 속아 공격에 당했습니다."
+            },
+            "success_tips": [
+                "SNS 이벤트의 혜택이 지나치게 좋아 보이면 의심해 보세요.",
+                "QR 코드를 통한 이벤트 참여 전, 댓글과 인터넷 검색으로 출처를 확인하세요.",
+                "공식 채널이나 신뢰할 수 있는 업체에서 진행하는 이벤트만 이용하세요.",
+                "개인정보 입력 요구가 있을 경우 반드시 재확인하고 주의하세요."
+            ]
+        }
+    ]
+}

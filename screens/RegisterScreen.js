@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     },
     registerButton: {
         padding: responsive(15),
-        borderRadius: 8,
+        borderRadius: responsive(8),
         height: responsive(47),
         backgroundColor: '#1A9AF5',
         marginTop: responsive(25)

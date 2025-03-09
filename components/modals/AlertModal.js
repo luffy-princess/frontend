@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         width: "80%",
         padding: responsive(20),
         backgroundColor: "white",
-        borderRadius: 10,
+        borderRadius: responsive(10),
     },
     content: {
         flex: 1,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         height: responsive(44),
-        borderRadius: 8,
+        borderRadius: responsive(8),
     },
     container: {
         flex: 1,

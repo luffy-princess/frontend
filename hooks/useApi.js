@@ -46,7 +46,7 @@ export default function useAPI() {
 
             return response;
         } catch (ex) {
-            console.error(ex);
+            console.log(ex);
             if (ex.message === 'Network request failed') {
                 Alert.alert('오류', '서버에 연결할 수 없습니다.');
             }
@@ -61,6 +61,16 @@ export default function useAPI() {
             method: 'GET'
         }, accessToken, refreshToken);
 
+        return response;
+    }
+
+    const doLogout = async () => {
+        const accessToken = getAccessToken();
+        const refreshToken = await getRefreshToken();
+
+        const response = await fetchAPI('/logout', {
+            method: 'POST',
+        }, accessToken, refreshToken);
         return response;
     }
 
@@ -91,11 +101,24 @@ export default function useAPI() {
         return response;
     }
 
+    const getCurrentPhishingAlerts = async () => {
+        const accessToken = getAccessToken();
+        const refreshToken = await getRefreshToken();
+
+        const response = await fetchAPI('/api/phishing-alerts', {
+            method: 'GET'
+        }, accessToken, refreshToken);
+
+        return response;
+    }
+
     return {
         doLogin,
+        doLogout,
         doRegister,
         getMyInfo,
         getRegistrationTerms,
+        getCurrentPhishingAlerts,
         fetchAPI
     };
 }

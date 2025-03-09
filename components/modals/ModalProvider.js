@@ -4,6 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import AlertModal from './AlertModal';
 import InfoModal from './InfoModal';
+import TrainingResultModal from './TrainingResultModal';
 
 const ModalContext = createContext();
 
@@ -17,17 +18,21 @@ export function ModalProvider({ children }) {
         title: '',
         description: '',
         action: () => { },
+        score: 0,
+        improvements: [],
         isOpen: false
     });
 
     function modalOpen(data) {
-        const { modalType, title, description, action } = data;
+        const { modalType, title, description, action, score, improvements } = data;
 
         setModalState({
             modalType,
             title,
             description,
             action,
+            score,
+            improvements,
             isOpen: true
         });
     }
@@ -38,6 +43,8 @@ export function ModalProvider({ children }) {
             title: '',
             description: '',
             action: () => { },
+            score: 0,
+            improvements: [],
             isOpen: false
         });
     }
@@ -60,6 +67,17 @@ export function ModalProvider({ children }) {
                         title={modalState.title}
                         description={modalState.description}
                         action={modalState.action}
+                        visible={modalState.isOpen}
+                        onClose={modalClose}
+                    />
+                );
+            } else if (modalState.modalType === 'training_result') {
+                return (
+                    <TrainingResultModal
+                        title={modalState.title}
+                        score={modalState.score}
+                        description={modalState.description}
+                        improvements={modalState.improvements}
                         visible={modalState.isOpen}
                         onClose={modalClose}
                     />

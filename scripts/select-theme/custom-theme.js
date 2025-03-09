@@ -20,7 +20,7 @@ export default StyleSheet.create({
   },
   badgeDotStyle: {
     backgroundColor: Colors.GREY,
-    borderRadius: 10 / 2,
+    borderRadius: responsive(10 / 2),
     height: responsive(10),
     marginRight: responsive(8),
     width: responsive(10),
@@ -31,7 +31,7 @@ export default StyleSheet.create({
   badgeStyle: {
     alignItems: 'center',
     backgroundColor: Colors.ALTO,
-    borderRadius: 10,
+    borderRadius: responsive(10),
     flexDirection: 'row',
     paddingHorizontal: responsive(10),
     paddingVertical: responsive(5),
@@ -53,7 +53,7 @@ export default StyleSheet.create({
   dropDownContainer: {
     backgroundColor: '#E8E7EA',
     borderColor: Colors.BLACK,
-    borderRadius: 8,
+    borderRadius: responsive(8),
     borderWidth: 1,
     overflow: 'hidden',
     position: 'absolute',
@@ -138,7 +138,7 @@ export default StyleSheet.create({
   },
   searchTextInput: {
     borderColor: Colors.BLACK,
-    borderRadius: 8,
+    borderRadius: responsive(8),
     borderWidth: 1,
     color: Colors.BLACK,
     flexGrow: 1,
@@ -153,7 +153,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#E8E7EA',
     borderColor: Colors.WHITE,
-    borderRadius: 8,
+    borderRadius: responsive(8),
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',

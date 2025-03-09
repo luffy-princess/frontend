@@ -16,7 +16,7 @@
       "supportsTablet": true,
       "usesAppleSignIn": true,
       "bundleIdentifier": "com.phishme.app",
-      "backgroundColor": "#fff",
+      "backgroundColor": "#ffffff",
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
@@ -37,6 +37,7 @@
     },
     "plugins": [
       "expo-font",
+      "expo-asset",
       "expo-localization",
       "expo-build-properties",
       "expo-apple-authentication",
@@ -44,7 +45,7 @@
         "@react-native-seoul/kakao-login",
         {
           "kakaoAppKey": "",
-          "kotlinVersion": "1.9.0"
+          "kotlinVersion": ""
         }
       ],
       [
@@ -58,7 +59,7 @@
         {
           "android": {
             "extraMavenRepos": [
-              "https://devrepo.kakao.com/nexus/content/groups/public/"
+              ""
             ]
           }
         }
@@ -66,7 +67,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "43bc9d91-05e3-42f2-8169-3e316143dece"
+        "projectId": ""
       }
     }
   }

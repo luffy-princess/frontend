@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: responsive(15),
         borderWidth: 1,
-        borderRadius: 7,
+        borderRadius: responsive(7),
         alignItems: 'center'
     },
     errorLabel: {

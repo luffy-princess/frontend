@@ -6,7 +6,6 @@ const PROGRESS_BAR_WIDTH = 300;
 const PROGRESS_BAR_HEIGHT = 10;
 
 export default function TrainProgress({ stats }) {
-
     return (
         <View style={styles.card}>
             <View style={styles.header}>
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     card: {
         width: responsive(344),
         backgroundColor: '#fff',
-        borderRadius: 7,
+        borderRadius: responsive(7),
         padding: responsive(20),
     },
     header: {

@@ -1,55 +1,82 @@
-import { ScrollView, StyleSheet, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
-import responsive from "../scripts/responsive";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import useTrainingApi from "../hooks/useTrainingApi";
+import { SafeAreaView, ScrollView, StyleSheet, View, RefreshControl, Dimensions } from "react-native";
+import { FadeIn } from "react-native-reanimated";
 import ScenarioCard from "../components/ScenarioCard";
+import responsive from "../scripts/responsive";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function TrainListScreen() {
-    const [trainDataList, setTrainDataList] = useState([
-        {
-            id: 1,
-            icon: 'email',
-            level: '초급',
-            title: '이메일 피싱',
-            description: '이메일을 통한 피싱 사기 수법을 학습하고 대응 방법을 훈련합니다.가짜 은행 이메일.결제 확인 등 다양한 시나리오를 체험해볼 수있습니다.'
-        },
-        {
-            id: 2,
-            icon: 'call',
-            level: '중급',
-            title: '보이스 피싱',
-            description: '전화를통한 피싱 사기 수법과 대처 방법을 학습합니다.금융기관, 수사기관 사칭 등 실제 상황과 유사한시나리오로구성되어 있습니다.'
-        },
-        {
-            id: 3,
-            icon: 'comment',
-            level: '초급',
-            title: '스미싱',
-            description: '문자메시지를통한 피싱 사기수법을 학습합니다. 택배, 결제 알림 등을 가장한 악성 링크 대응 방법을 훈련합니다.'
-        },
-        {
-            id: 4,
-            icon: 'qr-code',
-            level: '고급',
-            title: '큐싱',
-            description: 'QR코드를 이용한 최신 피싱 사기 수법을 학습합니다.위조된 QR코드 식별법과 안전한 QR코드 스캔방법을 훈련합니다'
+    const [refreshing, setRefreshing] = useState(false);
+    const [trainDataList, setTrainDataList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { getTrainings } = useTrainingApi();
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchTrainings();
+        }, [])
+    );
+
+    const fetchTrainings = async () => {
+        setLoading(true);
+        try {
+            const { ok, data, error } = await getTrainings();
+            if (!ok) {
+                console.log(error);
+                return;
+            }
+            const trainings = data.map(training => {
+                const trainingData = JSON.parse(training.trainingData);
+                return {
+                    id: training.id,
+                    icon: trainingData.trainIcon,
+                    level: trainingData.difficulty || '초급',
+                    title: training.name,
+                    description: trainingData.trainDescription,
+                    trainingData: trainingData
+                };
+            });
+            setTrainDataList(trainings);
+        } catch (error) {
+            console.log('Failed to fetch trainings:', error);
+        } finally {
+            setLoading(false);
         }
-    ]);
+    };
 
     return (
-        <Animated.View key={'homeScreen'} entering={FadeIn.duration(600)} style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ gap: responsive(15), marginBottom: responsive(30) }}>
+        <SafeAreaView key={'homeScreen'} entering={FadeIn.duration(600)} style={styles.container}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={async () => {
+                            setRefreshing(true);
+                            await fetchTrainings();
+                            setRefreshing(false);
+                        }}
+                    />
+                }
+            >
+                <View style={styles.listContainer}>
                     {
-                        trainDataList.map((trainData, index) => {
+                        trainDataList.map(async (trainData, index) => {
                             return (
-                                <ScenarioCard key={index} data={trainData} />
+                                <ScenarioCard
+                                    key={index}
+                                    data={trainData}
+                                    isComplete={trainData.isComplete}
+                                    trainingId={trainData.id}
+                                    trainingData={trainData.trainingData}
+                                />
                             );
                         })
                     }
                 </View>
             </ScrollView>
-        </Animated.View>
+        </SafeAreaView>
     );
 }
 
@@ -58,7 +85,15 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         height: '100%',
-        paddingTop: responsive(63),
         alignItems: 'center'
+    },
+    listContainer: {
+        gap: responsive(15),
+        marginTop: responsive(23),
+        marginBottom: responsive(30)
+    },
+    skeletonCard: {
+        alignItems: 'center',
+        paddingHorizontal: responsive(23)
     }
 });

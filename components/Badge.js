@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import responsive from "../scripts/responsive";
 
-export default function Badge({ backgroundColor, textColor, text }) {
+export default function Badge({ backgroundColor, textColor, text, width = responsive(41) }) {
     return (
-        <View style={[styles.container, { backgroundColor }]}>
+        <View style={[styles.container, { backgroundColor, width }]}>
             <Text style={[styles.text, { color: textColor }]}>{text}</Text>
         </View>
     );
@@ -11,9 +11,8 @@ export default function Badge({ backgroundColor, textColor, text }) {
 
 const styles = StyleSheet.create({
     container: {
-        width: responsive(41),
         height: responsive(27),
-        borderRadius: 3,
+        borderRadius: responsive(3),
         alignItems: 'center',
         justifyContent: 'center'
     },

@@ -1,26 +1,36 @@
-import { ExpoConfig, ConfigContext } from '@expo/config';
+import { ExpoConfig, ConfigContext } from '@expo/config'
 import * as dotenv from 'dotenv';
 
 dotenv.config();
+
+// 환경변수가 없을 경우 에러를 발생시키는 함수
+const requireEnv = (name) => {
+    const value = process.env[name];
+    if (!value) {
+        throw new Error(`Missing required environment variable: ${name}`);
+    }
+    return value;
+};
 
 export default ({ config }) => ({
     ...config,
     plugins: [
         "expo-font",
+        "expo-asset",
         "expo-localization",
         "expo-build-properties",
         "expo-apple-authentication",
         [
             "@react-native-seoul/kakao-login",
             {
-                kakaoAppKey: process.env.KAKAO_APP_KEY,
+                kakaoAppKey: requireEnv('KAKAO_APP_KEY'),
                 kotlinVersion: "1.9.0"
             }
         ],
         [
             "@react-native-google-signin/google-signin",
             {
-                iosUrlScheme: process.env.IOS_URL_SCHEME
+                iosUrlScheme: requireEnv('IOS_URL_SCHEME')
             }
         ],
         [
@@ -36,7 +46,7 @@ export default ({ config }) => ({
     ],
     extra: {
         eas: {
-            projectId: "43bc9d91-05e3-42f2-8169-3e316143dece"
+            projectId: requireEnv('EAS_PROJECT_ID')
         }
     }
 });

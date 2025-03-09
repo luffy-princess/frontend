@@ -1,4 +1,4 @@
-import { IOS_CLIENT_ID } from '@env';
+import { IOS_CLIENT_ID, GOOGLE_WEB_CLIENT_ID } from '@env';
 import { GoogleSignin, isCancelledResponse } from '@react-native-google-signin/google-signin';
 import * as KakaoLogins from '@react-native-seoul/kakao-login';
 import * as AppleAuthentication from 'expo-apple-authentication';
@@ -15,12 +15,17 @@ import { useModalDispatch } from '../components/modals/ModalProvider';
 import useAPI from '../hooks/useApi';
 import useJwtUtils from '../hooks/useJwtUtils';
 import responsive from '../scripts/responsive';
+import { usePhishmeStore } from '../store';
 
-GoogleSignin.configure({ iosClientId: IOS_CLIENT_ID });
+GoogleSignin.configure({
+    webClientId: GOOGLE_WEB_CLIENT_ID,
+    iosClientId: IOS_CLIENT_ID
+});
 
 export default function LoginScreen({ navigation }) {
     const { authProviders } = useJwtUtils();
-    const { doLogin } = useAPI();
+    const { doLogin, getMyInfo } = useAPI();
+    const { setUserInfo } = usePhishmeStore();
     const { modalOpen } = useModalDispatch();
 
     const sendLoginRequest = async (idToken, authProvider) => {
@@ -50,6 +55,11 @@ export default function LoginScreen({ navigation }) {
             return;
         }
 
+        const getMyInfoResponse = await getMyInfo();
+        if (getMyInfoResponse.ok) {
+            const responseData = await getMyInfoResponse.json();
+            setUserInfo(responseData);
+        }
         navigation.navigate('Main');
     }
 
@@ -67,7 +77,7 @@ export default function LoginScreen({ navigation }) {
                 return;
             }
 
-            console.error(`${provider} 로그인 실패`, ex);
+            console.log(`${provider} 로그인 실패`, ex);
             modalOpen({
                 modalType: 'alert',
                 title: '오류',
@@ -175,7 +185,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: responsive(300),
         padding: responsive(10),
-        borderRadius: 8,
+        borderRadius: responsive(8),
         alignItems: 'center',
         marginBottom: responsive(10),
     },

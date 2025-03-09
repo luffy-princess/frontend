@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#E8E7EA',
         flexDirection: 'row',
         paddingHorizontal: responsive(15),
-        borderWidth: 1,
-        borderRadius: 7,
+        borderWidth: responsive(1),
+        borderRadius: responsive(7),
         alignItems: 'center'
     },
     errorLabel: {
